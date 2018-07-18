@@ -1032,12 +1032,35 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 	int last_section_number = data[7];
 	int network_descriptors_length = ((data[8] & 0x0f) << 8) | data[9];
 	int original_network_id = (data[network_descriptors_length + 9 + 5] << 8) | data[network_descriptors_length + 9 + 6];
+	int offset = 10;
 
-	return Py_BuildValue("{s:i,s:i,s:i,s:i,s:i,s:i,s:i}",
+	char network_name[256];
+	memset(network_name, '\0', 256);
+	strcpy(network_name, "Unknown");
+	
+	while (network_descriptors_length > 0)
+	{
+		int descriptor_tag = data[offset];
+		int descriptor_length = data[offset + 1];
+		
+		if (descriptor_tag == 0x40)
+		{
+			network_name_length = data[offset + 1];
+			if (network_name_length == 255)
+				network_name_length--;
+			memcpy(network_name, data + offset + 2, network_name_length);
+		}
+
+		offset += (descriptor_length + 1);
+		network_descriptors_length -= (descriptor_length + 1);
+	}
+	
+	return Py_BuildValue("{s:i,s:i,s:i,s:i,s:i,s:i,s:i,s:s}",
 		"table_id", table_id, variable_key_name, variable_id,
 		"version_number", version_number, "current_next_indicator", current_next_indicator,
 		"section_number", section_number, "last_section_number", last_section_number,
-		"original_network_id", original_network_id);
+		"original_network_id", original_network_id,
+		"network_name", network_name);
 }
 
 PyObject *ss_parse_header_2(unsigned char *data, int length, const char *variable_key_name) //SDT and Fastscan
