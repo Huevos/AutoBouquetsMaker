@@ -1042,7 +1042,7 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 	while (network_descriptors_length > 0)
 	{
 		unsigned char descriptor_tag = data[offset];
-		unsigned char descriptors_length = data[offset + 1];
+//		unsigned char descriptors_length = data[offset + 1];
 		int offset1 = offset + 2;
 		
 		if (descriptor_tag == 0x40)
@@ -1064,7 +1064,7 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 			offset += (descriptor_length + 2);
 			network_descriptors_length -= (descriptor_length + 2);
 		}
-		break
+		break;
 	}
 	
 
