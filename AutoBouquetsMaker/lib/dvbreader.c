@@ -1034,12 +1034,14 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 	int original_network_id = (data[network_descriptors_length + 9 + 5] << 8) | data[network_descriptors_length + 9 + 6];
 
 	int offset = 9;
+	
+	int abort = 0
 
 	char network_name[256];
 	memset(network_name, '\0', 256);
 	strcpy(network_name, "Unknown");
 	
-	while (network_descriptors_length > 0)
+	while (network_descriptors_length > 0 && abort < 100)
 	{
 		unsigned char descriptor_tag = data[offset];
 //		unsigned char descriptors_length = data[offset + 1];
@@ -1064,7 +1066,7 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 			offset += (descriptor_length + 2);
 			network_descriptors_length -= (descriptor_length + 2);
 		}
-		break;
+		abort += 1
 	}
 	
 
