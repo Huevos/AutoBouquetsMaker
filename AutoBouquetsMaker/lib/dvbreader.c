@@ -1033,10 +1033,11 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 	int network_descriptors_length = ((data[8] & 0x0f) << 8) | data[9];
 	int original_network_id = (data[network_descriptors_length + 9 + 5] << 8) | data[network_descriptors_length + 9 + 6];
 	int offset = 10;
-
+	
 	char network_name[256];
 	memset(network_name, '\0', 256);
 	strcpy(network_name, "Unknown");
+	unsigned network_name_length;
 	
 	while (network_descriptors_length > 0)
 	{
