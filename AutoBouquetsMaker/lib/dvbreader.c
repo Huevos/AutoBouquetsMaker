@@ -1035,7 +1035,7 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 
 	int offset = 9;
 	
-	int abort = 0
+	int abort = 0;
 
 	char network_name[256];
 	memset(network_name, '\0', 256);
