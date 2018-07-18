@@ -62,7 +62,7 @@ PyObject *ss_parse_bat(unsigned char *data, int length) {
 	int bouquet_descriptors_length = ((data[8] & 0x0f) << 8) | data[9];
 	int transport_stream_loop_length = ((data[bouquet_descriptors_length + 10] & 0x0f) << 8) | data[bouquet_descriptors_length + 11];
 	int offset1 = 10;
-	int ret = 0;
+#	int ret = 0;
 
 	while (bouquet_descriptors_length > 0)
 	{
@@ -280,8 +280,8 @@ PyObject *ss_parse_bat(unsigned char *data, int length) {
 				descriptor_length -= 2;
 				while (descriptor_length > 0)
 				{
-					int i;
-					int found = 0;
+#					int i;
+#					int found = 0;
 					unsigned short int channel_id;
 					unsigned short int sky_id;
 					unsigned short int service_id;
@@ -555,7 +555,7 @@ PyObject *ss_parse_nit(unsigned char *data, int length) {
 	int network_descriptors_length = ((data[8] & 0x0f) << 8) | data[9];
 	int transport_stream_loop_length = ((data[network_descriptors_length + 10] & 0x0f) << 8) | data[network_descriptors_length + 11];
 	int offset1 = network_descriptors_length + 12;
-	int ret = 0;
+#	int ret = 0;
 
 	while (transport_stream_loop_length > 0)
 	{
@@ -1042,7 +1042,7 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 	while (network_descriptors_length > 0)
 	{
 		unsigned char descriptor_tag = data[offset];
-		unsigned char descriptor_length = data[offset + 1];
+		unsigned char descriptors_length = data[offset + 1];
 		int offset1 = offset + 2;
 		
 		if (descriptor_tag == 0x40)
@@ -1064,6 +1064,7 @@ PyObject *ss_parse_header(unsigned char *data, int length, const char *variable_
 			offset += (descriptor_length + 2);
 			network_descriptors_length -= (descriptor_length + 2);
 		}
+		break
 	}
 	
 
