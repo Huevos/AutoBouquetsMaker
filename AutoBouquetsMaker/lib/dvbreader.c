@@ -1018,7 +1018,7 @@ PyObject *ss_parse_fastscan(unsigned char *data, int length) {
 	return list;
 }
 
-PyObject *ss_parse_header_nit(unsigned char *data, int length, const char *variable_key_name) //NIT and BAT
+PyObject *ss_parse_header_nit(unsigned char *data, int length, const char *variable_key_name)
 {
 	int table_id = data[0];
 	int variable_id = (data[3] << 8) | data[4];
@@ -1060,7 +1060,7 @@ PyObject *ss_parse_header_nit(unsigned char *data, int length, const char *varia
 		"network_name", network_name);
 }
 
-PyObject *ss_parse_header_bat(unsigned char *data, int length, const char *variable_key_name) //NIT and BAT
+PyObject *ss_parse_header_bat(unsigned char *data, int length, const char *variable_key_name)
 {
 	int table_id = data[0];
 	int variable_id = (data[3] << 8) | data[4];
